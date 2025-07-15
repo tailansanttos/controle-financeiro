@@ -14,6 +14,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    //carregar os detalhes do usuário quando uma tentativa de autenticação ocorre (ex: ao fazer login ou validar um token).
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Usúario não encontrado."));

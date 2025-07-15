@@ -13,7 +13,7 @@ public record UserRequestDto(
         @NotNull(message = "Campo não pode ser nulo.")
         String name,
         @NotNull(message = "Campo não pode ser nulo.")
-        @CPF(message = "Campo cpf precisa ser válid.")
+        @CPF(message = "Campo cpf precisa ser válido.")
         String cpf,
         @NotNull(message = "Campo não pode ser nulo.")
         @Email(message = "Email deve ser válido")
