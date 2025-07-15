@@ -18,7 +18,7 @@ public class TokenService {
 
 
     //GERA UM TOKEN PARA O USUARIO FORNECIDO
-    //O TOKEN TEM O EMAIL DO USUAIRO COMO "SUBJECT" E UMA DATA DE EXPIRAÇÃO
+    //O TOKEN TEM O EMAIL DO USUAIRO COMO "SUBJECT" E UMA DATA DE EXPIRAÇÃO, E RETORNA O TOKEN
 
     public String genereteToken(User user){
         try {
@@ -31,6 +31,20 @@ public class TokenService {
             return token;
         }catch (JWTCreationException exception){
             throw new RuntimeException("Erro ao gerar token JWT", exception);
+        }
+    }
+
+    //VALIDA UM TOKEN JWT E RETORNA O "SUBJECT" (EMAIL DO USUARIO) SE FOR VALID
+    public String validateToken(String token){
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer("controle-despesas")
+                    .build()
+                    .verify(token)
+                    .getSubject(); //retornar o email do usuario
+        }catch (JWTCreationException exception){
+            throw new RuntimeException("Erro ao validar token. Está invalid ou expirado.", exception);
         }
     }
 
