@@ -10,6 +10,7 @@ import com.tailan.controle_de_despesas.entities.user.UserRole;
 import com.tailan.controle_de_despesas.mapper.usuario.UserMapper;
 import com.tailan.controle_de_despesas.repositories.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +57,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
-        return null;
+        var usernamePassword = new UsernamePasswordAuthenticationToken(loginRequestDto.email(), loginRequestDto.password());
+
+        var authentication = authenticationManager.authenticate(usernamePassword);
+
+        var token = tokenService.generateToken((User) authentication.getPrincipal());
+
+        return new LoginResponseDto(token);
     }
 }
