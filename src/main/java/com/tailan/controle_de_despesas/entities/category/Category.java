@@ -15,13 +15,10 @@ public class Category {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    
-    
-    
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
     @Enumerated(EnumType.STRING)
-
+    @Column(unique = true)
     private CategoryType type;
     private LocalDateTime dateCreation;
 
