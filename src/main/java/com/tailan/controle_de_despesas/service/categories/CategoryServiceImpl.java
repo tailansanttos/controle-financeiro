@@ -92,7 +92,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     private User getUserAuthenticate(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null){
+        // Verifica se há autenticação
+        if (authentication == null || !authentication.isAuthenticated()) {
             throw new RuntimeException("Acesso negado, usuario não autenticado para criar uma conta.");
         }
 
